@@ -19,12 +19,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/products' , [ProductController::class , 'index']);
-// Route::post('/products' , [ProductController::class , 'store']);
 
+
+// Public routes
+// Route::resource('products' , ProductController::class);
 Route::get('/products/search/{name}' , [ProductController::class , 'search']);
-Route::resource('products' , ProductController::class);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/products' , [ProductController::class , 'index']);
+Route::get('/products/{id}' , [ProductController::class , 'show']);
+//Protected routes
+Route::group(['middleware' =>['auth:sanctum']] ,  function () {
+    Route::post('/products' , [ProductController::class , 'store']);
+    Route::delete('/products/{id}' , [ProductController::class , 'destroy']);
+    Route::put('/products/{id}' , [ProductController::class , 'update']);
 });
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
