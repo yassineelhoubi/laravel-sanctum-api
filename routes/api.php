@@ -29,13 +29,14 @@ Route::get('/products' , [ProductController::class , 'index']);
 Route::get('/products/{id}' , [ProductController::class , 'show']);
 
 Route::post('/register' , [AuthController::class , 'register']);
-
-
+Route::post('/login' , [AuthController::class , 'login']);
 //Protected routes
 Route::group(['middleware' =>['auth:sanctum']] ,  function () {
     Route::post('/products' , [ProductController::class , 'store']);
     Route::delete('/products/{id}' , [ProductController::class , 'destroy']);
     Route::put('/products/{id}' , [ProductController::class , 'update']);
+
+    Route::post('/logout' , [AuthController::class , 'logout']);
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
